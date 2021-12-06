@@ -1,0 +1,574 @@
+//Author Austin Todd
+//Class CPT167
+//This program will allow you to calculate the total cost 
+//of the transaction with taxes included.
+//It also provides the grand total cost which includes
+//the total cost of each transaction and the count of
+//members that were selected into a combined price.
+//It will also include the amount of purchases per item
+//and the amount of rates that were used per transaction.
+//CreateDate 11-28-2021
+
+package edu.cpt167.todd.exercise6; // needs to be all lower cased
+
+//Imports the Scanner class
+import java.util.Scanner; //Required statement 1
+
+public class ToddMainClass //Declare the class "ToddMainClass"
+
+{ 
+	//declare and initialize all CLASS CONSTANTS from the list of CLASS CONSTANTS
+	public static final double TAX_RATE = .075;
+	public static final String DISCOUNT_NAME_MEMBER = "Member";
+	public static final String DISCOUNT_NAME_SENIOR = "Senior";
+	public static final String DISCOUNT_NAME_NONE = "No Discount";
+	public static final String DISCOUNT_NAME_QUIT = "Quit";
+	public static final double DISCOUNT_RATE_MEMBER = 0.15;
+	public static final double DISCOUNT_RATE_SENIOR = 0.25;
+	public static final double DISCOUNT_RATE_NONE = 0.0;
+	public static final String ITEM_NAME_PREMIUM = "Keyboard";
+	public static final String ITEM_NAME_SPECIAL = "Mouse";
+	public static final String ITEM_NAME_BASIC = "Headset";
+	public static final String ITEM_NAME_RETURN = "Return to Main Menu";
+	public static final double ITEM_PRICE_PREMIUM = 55.95;
+	public static final double ITEM_PRICE_SPECIAL = 24.95;
+	public static final double ITEM_PRICE_BASIC = 15.95;
+	public static final int RESET_VALUE = 0;
+
+	//main method/function
+	public static void main(String[] args) 
+
+	{ 
+
+		//Introduction section
+		//declare and initialize the Scanner object
+		Scanner input = new Scanner(System.in); //Required statement 2
+
+		//declare and initialize all local constants from the Data Dictionary and Flow chart START
+
+
+
+
+		//Initializing of all local variables in the Data Dictionary  and Flowchart START
+		String userName = "";
+		char rateSelection = ' ';
+		char itemSelection = ' ';
+		int howMany = 0;
+		String discountName = "";
+		double discountRate = 0.0;
+		String itemName = "";
+		double itemPrice = 0.0;
+		double discountAmount = 0.0;
+		double discountPrice = 0.0;
+		double subTotal = 0.0;
+		double tax = 0.0;
+		double totalCost = 0.0;
+		int memberCount = 0;
+		int seniorCount = 0;
+		int noDiscountCount = 0;
+		double grandTotal = 0.0;
+		int premiumCount = 0;
+		int specialCount = 0;
+		int basicCount = 0;
+		double purchaseAmt = 0.0;
+
+		//invoke statement to Void method, to display the Welcome Banner
+		displayWelcomeBanner();
+
+		//INPUT section
+
+
+		//assignment statement with an invoke statement to the VR method
+		userName = getUserName(input);//assigns the value on the right to the variable on the left
+
+
+		//assignment statement with an invoke statement to the VR method
+		rateSelection = validateMainMenu(input);//assigns the value on the right to the variable on the left
+
+		System.out.println();//Space for easier reading 
+
+		//run-while, used to test menu selection
+		while (rateSelection != 'Q')//assigns the value on the right to the variable on the left
+		{
+			//assignment statements with an invoke statement to the VR method
+			itemSelection = validateItemMenu(input);//assigns the value on the right to the variable on the left
+
+			while (itemSelection != 'R')//assigns the value on the right to the variable on the left
+			{
+				//assignment statements with an invoke statement to the VR method
+				howMany = validateHowMany(input);//assigns the value on the right to the variable on the left
+
+				//OUTPUT section
+
+				//Process section
+				//Process section structure
+				//test to see which discount Name and price to assign and the count of them.
+				if (rateSelection =='A')//assigns the value on the right to the variable on the left
+				{
+					//Assignment statements
+					discountName = DISCOUNT_NAME_MEMBER;//assigns the value on the right to the variable on the left
+
+					discountRate = DISCOUNT_RATE_MEMBER;//assigns the value on the right to the variable on the left
+
+					memberCount++;
+				}
+				//END OF if
+
+				else if (rateSelection =='B')
+				{
+					//Assignment statements
+					discountName = DISCOUNT_NAME_SENIOR;//assigns the value on the right to the variable on the left
+
+					discountRate = DISCOUNT_RATE_SENIOR;//assigns the value on the right to the variable on the left
+
+					seniorCount++;
+				}
+				//END OF else if 
+				else 
+				{
+					//Assignment statements
+					discountName = DISCOUNT_NAME_NONE;//assigns the value on the right to the variable on the left
+
+					discountRate = DISCOUNT_RATE_NONE;//assigns the value on the right to the variable on the left
+
+					noDiscountCount++;
+				}
+
+				//END OF else
+				//Last option is else statement without a test condition
+
+				if (itemSelection =='A')//assigns the value on the right to the variable on the left
+				{
+					//Assignment statements
+					itemName = ITEM_NAME_PREMIUM;//assigns the value on the right to the variable on the left
+
+					itemPrice = ITEM_PRICE_PREMIUM;//assigns the value on the right to the variable on the left
+
+					premiumCount++;
+				}
+				//END OF if
+
+				else if (itemSelection =='B')//assigns the value on the right to the variable on the left
+				{
+					//Assignment statements
+					itemName = ITEM_NAME_SPECIAL;//assigns the value on the right to the variable on the left
+
+					itemPrice = ITEM_PRICE_SPECIAL;//assigns the value on the right to the variable on the left
+
+					specialCount++;
+				}
+				//END OF else if 
+				else 
+				{
+					//Assignment statements
+					itemName = ITEM_NAME_BASIC;//assigns the value on the right to the variable on the left
+
+					itemPrice = ITEM_PRICE_BASIC;//assigns the value on the right to the variable on the left
+
+					basicCount++;
+				}
+				//END OF else
+				//Last option is else statement without a test condition
+
+				//Assignment statement for the discountAmount 
+				discountAmount = itemPrice * discountRate;
+
+				//Assignment statement for the discountPrice by finding the difference between
+				//the itemPrice and discountAmount
+				discountPrice = itemPrice - discountAmount;
+
+				//Assignment statement for the purchaseAmt
+				purchaseAmt = howMany * discountPrice;
+
+				//Assignment statement for the subTotal
+				subTotal = subTotal + purchaseAmt;
+
+				//OUTPUT section
+
+				//report
+				//invoke statement to Void method, to display the Item Receipt
+				displayItemReceipt (itemName, itemPrice, discountName, discountRate, discountAmount, 
+						discountPrice, howMany, purchaseAmt, subTotal);
+
+				//MODFIY THE LCV - UPDATE READ
+				//assignment statement with an invoke statement to the VR method
+				itemSelection = validateItemMenu(input);
+
+			}
+
+			//Assignment statement for the tax
+			tax = subTotal * TAX_RATE;
+
+			//Assignment statement for the totalCost
+			totalCost = subTotal + tax;
+
+			//Assignment statement for the grandTotal
+			grandTotal = grandTotal + totalCost;
+
+			displayOrderTotal (userName, subTotal, tax, totalCost);
+
+			//Assignment statement for the subTotal
+			subTotal = RESET_VALUE;
+
+			//assignment statements with an invoke statement to the VR method
+			rateSelection = validateMainMenu(input);
+		}
+		
+		if (grandTotal > 0.0)
+		{
+			//invoke statement to Void method, to display the Final Report
+			displayFinalReport(memberCount, seniorCount, noDiscountCount, premiumCount,
+					specialCount, basicCount, grandTotal);
+		}
+		//END OF if
+
+		//display the farewell message
+		//Farewell Message
+		//invoke statement to Void method, to display the Farewell Message
+		displayFarewellMessage();
+
+		//close Scanner object
+		input.close();
+	}
+	//END OF the main method
+
+	//Void method section
+
+	//Void method to display WELCOME Banner
+	public static void displayWelcomeBanner()
+	{
+		System.out.println("Welcome to the ToddExercise6 Program!");//project
+		System.out.println("This program will allow you to calculate the total cost");//reason to use it
+		System.out.println("of the transaction with taxes included.");
+		System.out.println("It also provides the grand total cost which includes");
+		System.out.println("the total cost of each transaction and the count of");
+		System.out.println("members that were selected into a combined price.");
+		System.out.println("It will also include the amount of purchases per item");
+		System.out.println("and the amount of rates that were used per transaction.");
+		//ALL LINES ON CONSOLE MUST NOT EXCEED 60 or above characters 
+		System.out.println();//Space for easier reading 
+	}
+	//END OF void method to display the welcome banner
+
+	//void method to display Farewell Message
+	public static void displayFarewellMessage() 
+	{
+
+		System.out.println(); 
+		System.out.println("Thanks for using the ToddExercise6 Program!");
+		System.out.println("Have a great day!");	
+	}
+	//END of void method to display the Farewell Message
+
+	//void method to display Item Receipt
+	public static void displayItemReceipt (String borrowedItemName, double borrowedItemPrice, 
+			String borrowedDiscountName, double borrowedDiscountRate, 
+			double borrowedDiscountAmount,double borrowedDiscountPrice, int borrowedHowMany,
+			double borrowedPurchaseAmt,double borrowedSubTotal)
+	{
+		//report
+		//BORDER ~ output line used to make the output easier to read
+		System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+		System.out.println("Item Report");
+		System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+		//~ output line used to make the output easier to read
+
+		//The following should print: 2 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: left aligned with 9 minimum characters (for spacing between strings and variables)
+		System.out.printf("%-25s%-9s\n","Item Name", borrowedItemName);
+		//The following should print: 3 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: Left aligned with 1 minimum character 
+		//Third: right aligned with 9 minimum characters & 2 decimal places
+		System.out.printf("%-25s%-1s%9.2f\n","Original Price", "$", borrowedItemPrice);
+		//The following should print: 2 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: left aligned with 9 minimum characters (for spacing between strings and variables)
+		System.out.printf("%-25s%-9s\n","Discount Type", borrowedDiscountName);
+		//The following should print: 3 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: right aligned with 9 minimum characters & 1 decimal place displayed as a percent
+		//third: right aligned with 1 minimum character as percent sign
+		System.out.printf("%-25s%9.1f%s\n","Discount Rate", borrowedDiscountRate * 100, "%");
+		//The following should print: 3 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: left aligned with 1 minimum character 
+		//Third: right aligned with 9 minimum characters & 2 decimal places
+		System.out.printf("%-25s%-1s%9.2f\n","Discount Amount", "$", borrowedDiscountAmount);
+		//The following should print: 3 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: left aligned with 1 minimum character 
+		//Third: right aligned with 9 minimum characters & 2 decimal places
+		System.out.printf("%-25s%-1s%9.2f\n","Discounted Price", "$", borrowedDiscountPrice);
+		//The following should print: 2 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: right aligned with 10 minimum characters (for spacing between strings and variables)
+		System.out.printf("%-25s%10d\n", "Quantity", borrowedHowMany);
+		//The following should print: 3 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: left aligned with 1 minimum character
+		//Third: right aligned with 9 minimum characters & 2 decimal places
+		System.out.printf("%-25s%-1s%9.2f\n","Purchase Amount", "$", borrowedPurchaseAmt);
+		//The following should print: 3 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: left aligned with 1 minimum character
+		//Third: right aligned with 9 minimum characters & 2 decimal places
+		System.out.printf("%-25s%-1s%9.2f\n","Subtotal", "$", borrowedSubTotal);
+		//BORDER - output line used to make the output easier to read
+		System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+		//~ output line used to make the output easier to read
+		System.out.println();//Spacing
+	}
+	//END OF void method to display Item Receipt
+	public static void displayOrderTotal( String borrowedUserName, double borrowedSubTotal, 
+			double borrowedTax, double borrowedTotalCost)
+	{
+
+		//report
+		//BORDER ~ output line used to make the output easier to read
+		System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+		System.out.println("Order Report");
+		System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+		//~ output line used to make the output easier to read
+
+		//The following should print: 2 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: left aligned with 10 minimum characters (for spacing between strings and variables)
+		System.out.printf("%-25s%-10s\n","User", borrowedUserName);
+		//The following should print: 3 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: left aligned with 1 minimum character
+		//Third: right aligned with 9 minimum characters & 2 decimal places
+		System.out.printf("%-25s%-1s%9.2f\n","Subtotal", "$", borrowedSubTotal);
+		//The following should print: 3 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: left aligned with 1 minimum character
+		//Third: right aligned with 9 minimum characters & 2 decimal places
+		System.out.printf("%-25s%-1s%9.2f\n","Tax", "$", borrowedTax);
+		//The following should print: 3 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: left aligned with 1 minimum character
+		//Third: right aligned with 9 minimum characters & 2 decimal places
+		System.out.printf("%-25s%-1s%9.2f\n","Total Cost","$", borrowedTotalCost);
+		//BORDER - output line used to make the output easier to read
+		System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+		//~ output line used to make the output easier to read
+		System.out.println();//Spacing
+	}
+
+
+	//void method to display Final Report
+	public static void displayFinalReport(int borrowedMemberCount, int borrowedSeniorCount, 
+			int borrowedNoDiscountCount, int borrowedPremiumCount, int borrowedSpecialCount,
+			int borrowedBasicCount, double borrowedGrandTotal)
+	{
+		//~ output line used to make the output easier to read
+		System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+		//menu title
+		System.out.println("FINAL REPORT");
+		System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+		//~ output line used to make the output easier to read
+
+		//menu options
+		//The following should print: 1 column with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		System.out.printf("%-25s\n","Count of discount types: ");
+		System.out.printf("%-25s%9d\n", DISCOUNT_NAME_MEMBER, borrowedMemberCount);
+		//The following should print: 2 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: right aligned with 9 minimum characters (integer)
+		System.out.printf("%-25s%9d\n", DISCOUNT_NAME_SENIOR, borrowedSeniorCount);
+		//The following should print: 2 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: right aligned with 9 minimum characters (integer)
+		System.out.printf("%-25s%9d\n", DISCOUNT_NAME_NONE, borrowedNoDiscountCount);
+		//The following should print: 2 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: right aligned with 9 minimum characters (integer)
+		//~ output line used to make the output easier to read
+		System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+		System.out.printf("%-25s\n","Count of item types: ");
+		System.out.printf("%-25s%9d\n", ITEM_NAME_PREMIUM, borrowedPremiumCount);
+		//The following should print: 2 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: right aligned with 9 minimum characters (integer)
+		//~ output line used to make the output easier to read
+		System.out.printf("%-25s%9d\n", ITEM_NAME_SPECIAL, borrowedSpecialCount);
+		//The following should print: 2 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: right aligned with 9 minimum characters (integer)
+		//~ output line used to make the output easier to read
+		System.out.printf("%-25s%9d\n", ITEM_NAME_BASIC, borrowedBasicCount);
+		//The following should print: 2 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: right aligned with 9 minimum characters (integer)
+		//~ output line used to make the output easier to read
+		System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+		//The following should print: 3 columns with 1 extra character for Padding
+		////First: Left aligned with 25 minimum characters
+		//Second: Left aligned with 1 minimum characters 
+		//Third: right aligned with 8 minimum characters & 2 decimal places
+		System.out.printf("%-25s%-1s%8.2f\n", "Grand Total","$", borrowedGrandTotal);
+		System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+		//~ output line used to make the output easier to read
+		System.out.println();//spacing
+	}
+
+	public static void displayMainMenu()
+	{
+		//Prime Read
+		// ~ border is to make the menu easier to read
+		//menu 
+		System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+		//menu title
+		System.out.println("Discount Menu");
+		System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+		//menu options
+		System.out.printf("%-8s%-14s%9.1f%s\n", "[A] for", DISCOUNT_NAME_MEMBER, DISCOUNT_RATE_MEMBER * 100, "%");
+		System.out.printf("%-8s%-14s%9.1f%s\n", "[B] for", DISCOUNT_NAME_SENIOR, DISCOUNT_RATE_SENIOR * 100, "%");
+		System.out.printf("%-8s%-14s%9.1f%s\n", "[C] for", DISCOUNT_NAME_NONE, DISCOUNT_RATE_NONE * 100, "%");
+		System.out.printf("%-8s%-14s\n", "[Q] for", DISCOUNT_NAME_QUIT);
+		System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+		
+	}
+
+	public static void displayItemMenu()
+	{
+		//menu
+		System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+		//menu title
+		System.out.println("Item Menu");
+		System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+		//menu options
+		System.out.printf("%-8s%14s%3s%5.2f\n", "[A] for", ITEM_NAME_PREMIUM, "$", ITEM_PRICE_PREMIUM);
+		System.out.printf("%-8s%14s%3s%5.2f\n", "[B] for", ITEM_NAME_SPECIAL, "$", ITEM_PRICE_SPECIAL);
+		System.out.printf("%-8s%14s%3s%5.2f\n", "[C] for", ITEM_NAME_BASIC, "$", ITEM_PRICE_BASIC);
+		System.out.printf("%-8s%-14s\n", "[R] for", ITEM_NAME_RETURN);
+		System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+	}
+
+	//END OF void method to display Final Report
+
+	//END OF Void method
+
+	//VR method section
+
+	public static String getUserName(Scanner borrowedInput)
+	{
+		String localUserName = "";
+		System.out.print("Please enter your name: ");
+		//prompts the user for their name
+		localUserName = borrowedInput.nextLine();
+		return localUserName;
+	}
+	//END OF VR method to get user name
+
+	//VR method to validate the main menu
+	public static char validateMainMenu(Scanner borrowedInput)
+	{
+		displayMainMenu();
+		char localSelection = ' ';
+
+		//Menu Prompt
+		//prompts the user to enter the localSelection
+		System.out.println();//spacing
+		System.out.print("Please enter your selection here: ");
+		//assignment statement
+		localSelection = borrowedInput.next().toUpperCase().charAt(0);
+		System.out.println();//spacing
+
+		//repetition structure
+		//validation loop for local Selection
+		while (localSelection != 'A' && localSelection != 'B' && localSelection != 'C' 
+				&& localSelection != 'Q')
+		{
+			//SIMPLE,SINGLE STATEMENT, ERROR MESSAGE
+			System.out.println("~~Invalid selection~~");
+			System.out.println();//spacing
+
+			displayMainMenu();
+
+			//Menu Prompt
+			//prompts the user to enter the local Selection
+			System.out.println();//spacing
+			System.out.print("Please enter your selection here: ");
+			//assignment statement
+			localSelection = borrowedInput.next().toUpperCase().charAt(0);
+			System.out.println();//spacing
+		}
+		return localSelection;
+	}
+	//END OF validation loop for localSelection for main menu
+
+	//VR method to validate the item menu
+	public static char validateItemMenu(Scanner borrowedInput)
+	{
+		displayItemMenu();
+		char localSelection = ' '; 
+
+		//Menu Prompt
+		//prompts the user to enter the itemSelection
+		System.out.println();//spacing
+		System.out.print("Please enter your selection here: ");
+		//assignment statement
+		localSelection = borrowedInput.next().toUpperCase().charAt(0);
+		System.out.println();//spacing
+
+		while (localSelection != 'A' && localSelection != 'B' && 
+				localSelection != 'C' && localSelection != 'R')
+		{
+			//SIMPLE,SINGLE STATEMENT, ERROR MESSAGE
+			System.out.println("~~Invalid selection~~");
+			System.out.println();//spacing
+			//menu
+			
+			displayItemMenu();
+			
+			//Menu Prompt
+			//prompts the user to enter the itemSelection
+			System.out.println();//spacing
+			System.out.print("Please enter your selection here: ");
+			//assignment statement
+			localSelection = borrowedInput.next().toUpperCase().charAt(0);
+			System.out.println();//spacing
+		}
+		return localSelection;
+	}
+	//END OF validation loop for localSelection for item menu
+
+	//VR method to validate how many (quantity)
+	public static int validateHowMany(Scanner borrowedInput)
+	{
+		int localHowMany = 0;
+		//END OF validation loop - for itemSelection
+
+		//prompts the user to enter a whole number for the quantity of the item they would like
+		System.out.print("How many would you like to have?: ");
+		//assignment statement
+		localHowMany = borrowedInput.nextInt();
+		//To add spacing 
+		System.out.println();
+
+		//repetition structure
+		//validation loop for how many
+		while (localHowMany <= 0)
+		{
+			//SIMPLE,SINGLE STATEMENT, ERROR MESSAGE
+			//~ output line used to make the output easier to read
+			//menu
+			System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+			//menu title
+			System.out.println("~~Invalid selection~~");
+			System.out.println("~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~ ~~~~");
+			System.out.print("How many would you like to have?: ");
+			//assignment statement
+			localHowMany = borrowedInput.nextInt();
+			//To add spacing 
+			System.out.println();
+		}
+		//END OF validation method for how many (quantity)
+		return localHowMany;
+	}	
+}
+//END class Main
